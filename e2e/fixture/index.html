@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Larkspur Coffee — small-batch roasters</title>
+    <meta name="description" content="Short." />
+    <meta property="og:title" content="Larkspur Coffee" />
+    <link rel="stylesheet" href="site.css" />
+  </head>
+  <body>
+    <header class="top">
+      <a class="logo" href="index.html">Larkspur</a>
+      <nav class="links" aria-label="Primary">
+        <a href="about.html" id="about-link">About</a>
+        <a href="#menu">Menu</a>
+      </nav>
+      <button id="burger" class="burger" aria-label="Open menu" onclick="document.body.classList.toggle('menu-open')">☰</button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>Coffee roasted on Tuesdays.</h1>
+        <h3>Shipped on Wednesdays.</h3>
+        <p>We roast in forty-pound batches and post them the next morning.</p>
+        <button id="counter" class="cta" onclick="this.dataset.n = (+this.dataset.n || 0) + 1; this.textContent = 'Added ' + this.dataset.n">Add a bag</button>
+        <a class="tiny" href="#terms" id="terms-link">i</a>
+      </section>
+
+      <section id="menu" class="cards">
+        <article><img src="bean.svg" width="64" height="64" /><h2>Kayon Mountain</h2><p>Ethiopia · apricot, jasmine</p></article>
+        <article><img src="bean.svg" width="64" height="64" alt="Coffee bean" /><h2>La Esperanza</h2><p>Colombia · panela, plum</p></article>
+        <article><img src="bean.svg" width="64" height="64" alt="" /><h2>Gitesi</h2><p>Rwanda · black tea, orange</p></article>
+      </section>
+
+      <!-- Deliberately wider than a phone. -->
+      <table class="prices">
+        <tr><th>Size</th><th>Whole bean</th><th>Ground</th><th>Subscription</th><th>Wholesale</th></tr>
+        <tr><td>250g</td><td>$14.00</td><td>$14.00</td><td>$12.50</td><td>$9.75</td></tr>
+        <tr><td>1kg</td><td>$44.00</td><td>$44.00</td><td>$39.00</td><td>$31.00</td></tr>
+      </table>
+
+      <form class="signup" onsubmit="event.preventDefault(); document.getElementById('thanks').hidden = false">
+        <label for="email">Get the roast schedule</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" />
+        <label><input id="weekly" type="checkbox" /> Weekly digest</label>
+        <button type="submit" id="join">Join</button>
+        <p id="thanks" hidden>Thanks — see you Tuesday.</p>
+      </form>
+
+      <p class="fine" id="terms">Prices include tax. Orders placed after noon on Tuesday ship the following week.</p>
+      <div class="spacer"></div>
+    </main>
+
+    <footer>© Larkspur Coffee Roasters</footer>
+    <script>
+      if (screen.width < 500) console.error('Carousel failed to initialise at ' + screen.width + 'px')
+      console.log('page ready')
+    </script>
+  </body>
+</html>

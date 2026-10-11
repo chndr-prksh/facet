@@ -1,0 +1,80 @@
+{
+  "name": "facet",
+  "productName": "Facet",
+  "version": "0.1.0",
+  "description": "A browser for responsive web development: every viewport at once, with real device emulation and built-in audits.",
+  "main": "out/main/index.js",
+  "author": "Chandra Prakash",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "start": "electron-vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "test": "npm run build && node e2e/smoke.mjs",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
+    "tour": "npm run build && node e2e/tour.mjs",
+    "test:packaged": "npm run pack && FACET_BIN=1 node e2e/smoke.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "zod": "^4.6.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "axe-core": "^4.14.0",
+    "electron": "^44.7.0",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^5.0.0",
+    "lucide-react": "^1.55.0",
+    "playwright-core": "^1.64.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.0.0",
+    "zustand": "^5.0.15"
+  },
+  "build": {
+    "appId": "app.facet.browser",
+    "productName": "Facet",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "out/**/*",
+      "package.json"
+    ],
+    "protocols": [
+      {
+        "name": "Facet",
+        "schemes": [
+          "facet"
+        ]
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "category": "Development",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Colour blocks</title>
+    <style>
+      /* Three viewports tall, each region a flat colour, so a capture can be verified by reading pixels. */
+      html, body { margin: 0; }
+      .q { position: absolute; width: 50vw; height: 50vh; }
+      #a { left: 0; top: 0; background: #f00; }
+      #b { left: 50vw; top: 0; background: #0f0; }
+      #c { left: 0; top: 50vh; background: #00f; }
+      #d { left: 50vw; top: 50vh; background: #ff0; }
+      #m { position: absolute; left: 0; top: 100vh; width: 100vw; height: 100vh; background: #f0f; }
+      #n { position: absolute; left: 0; top: 200vh; width: 100vw; height: 100vh; background: #0ff; }
+      #bar { position: fixed; left: 0; top: 0; width: 100vw; height: 4vh; background: #000; }
+    </style>
+  </head>
+  <body>
+    <div class="q" id="a"></div><div class="q" id="b"></div><div class="q" id="c"></div><div class="q" id="d"></div>
+    <div id="m"></div><div id="n"></div><div id="bar"></div>
+  </body>
+</html>
