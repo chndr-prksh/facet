@@ -81,8 +81,9 @@ export function connectHelper(): () => void {
         frameUrls: { ...store.frameUrls, [data.pane]: data.url ?? '' },
         overflow: { ...store.overflow, [data.pane]: data.overflow ?? 0 }
       }
-      // Following a link in one device moves the address bar, and with it every other device.
-      if (data.active && data.url && !data.pane.endsWith(':b') && data.url !== store.url) patch.url = data.url
+      // Following a link in one device moves the address bar, and with it every
+      // other device. With mirroring off, devices are left to browse on their own.
+      if (store.mirror && data.active && data.url && !data.pane.endsWith(':b') && data.url !== store.url) patch.url = data.url
       store.set(patch)
     }
   }

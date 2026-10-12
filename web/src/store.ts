@@ -66,7 +66,7 @@ export const MAX_PANES = 24
 export const REPO_URL = 'https://github.com/chndr-prksh/facet'
 
 /** Whether this build ships the helper extension download. */
-export const HELPER_AVAILABLE = false
+export const HELPER_AVAILABLE = true
 
 const DEVICES = new Map(BUILTIN_DEVICES.map((d) => [d.id, d]))
 

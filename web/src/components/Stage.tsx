@@ -86,7 +86,7 @@ function Welcome(): ReactNode {
             <b>Your own site, or one in development</b> works straight away, including <code>localhost</code>.
           </li>
           <li>
-            <b>Many large sites refuse to be embedded</b> (Google, GitHub, YouTube and most banks). You will be told when that happens; the desktop app opens those.
+            <b>Many large sites refuse to be embedded</b> (Google, GitHub, YouTube and most banks). You will be told when that happens, and the free helper extension lifts it.
           </li>
           <li>
             <b>Sizes are exact.</b> Pixel density, touch and the user agent still come from your own browser; the desktop app emulates those too.

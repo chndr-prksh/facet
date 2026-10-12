@@ -4,7 +4,36 @@ A desktop browser for responsive web development. It shows one page on many devi
 
 Facet was built as an answer to [Responsively App](https://github.com/responsively-org/responsively-app): the same core idea, with real device emulation and built-in audits added. It is an independent implementation and shares no code with Responsively.
 
-## Run it
+It comes in two forms that share one device catalogue:
+
+- **[Facet Web](https://chndr-prksh.github.io/facet/)**: a website. Paste a link, see it on many screens. Nothing to install.
+- **Facet desktop**: an Electron app with full device emulation, audits and an MCP server.
+
+## Facet Web
+
+**https://chndr-prksh.github.io/facet/**
+
+Paste any link and it opens side by side on the devices you pick. A shared link reopens the same page on the same devices, for example
+[this one](https://chndr-prksh.github.io/facet/?url=https://en.wikipedia.org/wiki/Responsive_web_design&devices=iphone-18-pro-max,galaxy-s26-ultra,ipad-mini,laptop-1536).
+
+- 292 device profiles with search, presets, saved sets, any custom size, and drag-resizable panes.
+- Side-by-side, wrapped and one-at-a-time layouts, fit-to-window zoom, rotation, device frames.
+- A/B compare: a second link beside the first on every device.
+- Column-grid and thumb-reach overlays.
+- Works with `localhost`, so you can point it at a project in development.
+
+**The limit every website of this kind has.** A site can tell browsers not to display it inside another page, and most large sites do (55 of 72 popular sites checked in October 2026). Facet Web detects this and says so instead of showing an unexplained blank pane. Because it uses frames, it also gets the viewport size exactly right but cannot change pixel density, touch input or the user agent; the desktop app does.
+
+**Facet Helper** (in [`extension/`](extension)) is a small Chrome and Edge extension that removes that limit. In tabs showing Facet Web, and only there, it strips the headers that forbid framing, so any site loads. It also mirrors scrolling, clicks, typing and navigation between devices and flags devices where the page overflows sideways. Install it from the Help panel on the site (download, unzip, *Load unpacked*). It is not on the Chrome Web Store.
+
+```bash
+npm run web:dev        # the website on http://localhost:5180
+npm run test:web       # 21 checks, with and without the extension
+```
+
+Pushing to `main` deploys the site to GitHub Pages.
+
+## Run the desktop app
 
 ```bash
 npm install
@@ -19,7 +48,7 @@ Requires Node 20.19+ or 22.12+. `npm run dist` produces installers (dmg, nsis, A
 
 **Devices**
 
-- 50 built-in devices (phones, foldables, tablets, laptops, desktops, a watch), custom devices you can create *and edit*, and saved suites.
+- 292 built-in device profiles (see below), custom devices you can create *and edit*, and saved suites.
 - Resizable panes with drag handles and typed dimensions, for hunting the exact width where a layout breaks.
 - Row, wrap and one-at-a-time layouts, fit-to-window zoom, optional device frames, rotation.
 - Tabs, each with its own page, devices and emulation.
@@ -61,6 +90,12 @@ claude mcp add --transport http facet http://127.0.0.1:12790/mcp
 ```
 
 Sixteen tools: `get_state`, `navigate`, `list_devices`, `set_devices`, `screenshot`, `audit_responsive`, `audit_accessibility`, `get_meta`, `get_console`, `get_breakpoints`, `compare_element`, `read_page`, `click`, `type_text`, `scroll`, `set_emulation`. The server is off by default, listens on 127.0.0.1 only, and rejects cross-origin requests.
+
+## The device catalogue
+
+292 profiles, many covering several models that share a screen: 164 phones, 14 foldables, 34 tablets, 33 laptops, 23 desktop monitors, 11 watches, and TVs, consoles and smart displays. It runs from the iPhone 4 to 2026 models (iPhone 18 Pro, Galaxy S26, Pixel 11) and includes the most common real-world sizes, such as Android 360 × 800 and a Full HD Windows laptop at 125% scaling (1536 × 864).
+
+Apple publishes logical resolutions, so those entries are exact. Android makers do not, and the value shifts with the user's display-size setting; entries derived from the panel resolution are marked `≈`. Sources: Apple's specifications, the Chrome DevTools device list, [yesviz.com](https://yesviz.com/viewport/), [screensize.io](https://www.screensize.io/devices.html) and [webmobilefirst.com](https://www.webmobilefirst.com/en/devices/). The catalogue lives in [`src/shared/devices.ts`](src/shared/devices.ts).
 
 ## Shortcuts
 
@@ -108,12 +143,13 @@ src/
     lib/scripts.ts   audits that are serialised and run inside pages
     lib/overlays.ts  the debug overlays
     panels/          the nine side panels
-e2e/           smoke test, visual tour, fixture site
-extension/     browser extension that sends the current tab to Facet
+web/           Facet Web, the static site (shares src/shared and the UI kit)
+extension/     Facet Helper, the browser extension for Facet Web
+e2e/           smoke tests for the app and the website, visual tour, fixture site
 ```
 
 Pages run in sandboxed `<webview>` guests with context isolation and no Node access. The app UI has a strict content security policy and talks to the main process only through allow-listed channels.
 
 ## Testing
 
-`npm test` builds the app, launches it, and loads a fixture site with deliberate defects. It checks emulated viewports, mirroring (including a real pointer click through a zoomed pane), every audit, overlays, rotation, the MCP server, and reads pixels back from screenshots of a colour-block page to confirm captures are correct on every device. `npm run tour` walks every screen and saves screenshots to `e2e/artifacts/` for review. `npm run test:packaged` runs the same checks against the packaged app.
+`npm test` builds the desktop app, launches it, and loads a fixture site with deliberate defects. It checks emulated viewports, mirroring (including a real pointer click through a zoomed pane), every audit, overlays, rotation, the MCP server, and reads pixels back from screenshots of a colour-block page to confirm captures are correct on every device. `npm run tour` walks every screen and saves screenshots to `e2e/artifacts/` for review. `npm run test:packaged` runs the same checks against the packaged app.
