@@ -22,7 +22,7 @@ Paste any link and it opens side by side on the devices you pick. A shared link 
 - Column-grid and thumb-reach overlays.
 - Works with `localhost`, so you can point it at a project in development.
 
-**The limit every website of this kind has.** A site can tell browsers not to display it inside another page, and most large sites do (55 of 72 popular sites checked in October 2026). Facet Web detects this and says so instead of showing an unexplained blank pane. Because it uses frames, it also gets the viewport size exactly right but cannot change pixel density, touch input or the user agent; the desktop app does.
+**The limit every website of this kind has.** A site can tell browsers not to display it inside another page, and most large sites do (55 of 71 popular sites checked in October 2026). Facet Web detects this and says so instead of showing an unexplained blank pane. Because it uses frames, it also gets the viewport size exactly right but cannot change pixel density, touch input or the user agent; the desktop app does.
 
 **Facet Helper** (in [`extension/`](extension)) is a small Chrome and Edge extension that removes that limit. In tabs showing Facet Web, and only there, it strips the headers that forbid framing, so any site loads. It also mirrors scrolling, clicks, typing and navigation between devices and flags devices where the page overflows sideways. Install it from the Help panel on the site (download, unzip, *Load unpacked*). It is not on the Chrome Web Store.
 
