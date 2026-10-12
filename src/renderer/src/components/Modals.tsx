@@ -112,6 +112,9 @@ const KINDS: Array<{ value: DeviceKind | 'all' | 'custom'; label: string }> = [
   { value: 'tablet', label: 'Tablets' },
   { value: 'laptop', label: 'Laptops' },
   { value: 'desktop', label: 'Desktops' },
+  { value: 'tv', label: 'TVs' },
+  { value: 'watch', label: 'Watches' },
+  { value: 'other', label: 'Displays' },
   { value: 'custom', label: 'Custom' }
 ]
 
@@ -211,8 +214,7 @@ export function DeviceManager(): ReactNode {
 
   const open = new Set(tab.panes.map((p) => p.deviceId))
   const devices = allDevices(custom)
-    .filter((d) => d.kind !== 'responsive' && d.kind !== 'watch')
-    .concat(allDevices(custom).filter((d) => d.kind === 'watch'))
+    .filter((d) => d.kind !== 'responsive')
     .filter((d) => (kind === 'all' ? true : kind === 'custom' ? d.custom : d.kind === kind))
     .filter((d) => `${d.name} ${d.brand} ${d.width}x${d.height}`.toLowerCase().includes(query.toLowerCase()))
 
@@ -260,9 +262,10 @@ export function DeviceManager(): ReactNode {
                     <i style={{ aspectRatio: `${d.width} / ${d.height}`, height: d.width > d.height ? 'auto' : 34, width: d.width > d.height ? 44 : 'auto' }} />
                   </span>
                   <span className="device-text">
-                    <b>{d.name}</b>
-                    <span>
-                      {d.width}×{d.height} · {Math.round(d.dpr * 100) / 100}x
+                    <b title={d.name}>{d.name}</b>
+                    <span title={d.approx ? 'Estimated from the panel resolution' : undefined}>
+                      {d.approx ? '≈ ' : ''}
+                      {d.width}×{d.height} · {Math.round(d.dpr * 100) / 100}x{d.year ? ` · ${d.year}` : ''}
                     </span>
                   </span>
                   <span className="device-check">{open.has(d.id) ? <Check size={13} /> : <DeviceIcon kind={d.kind} />}</span>

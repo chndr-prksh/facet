@@ -23,6 +23,9 @@ interface Props {
   isPrimary: boolean
 }
 
+/** net error codes worth one automatic retry: failed, timed out, network changed, connection closed/reset/failed, empty response. */
+const TRANSIENT = new Set([-2, -7, -21, -100, -101, -104, -118, -324])
+
 /** Changes to these need a reload before page scripts can observe them. */
 const reloadKey = (s: EmulationSpec): string => JSON.stringify([s.userAgent, s.touch, s.mobile, s.disableJs, s.locale])
 
@@ -47,6 +50,8 @@ export function WebView(props: Props): ReactNode {
     webview.className = 'webview'
     let registered = false
     let disposed = false
+    /** The URL that has already had its one automatic retry. */
+    let retried = ''
 
     rt().patchView(viewId, { ready: false, loading: false, url: '', title: '', error: undefined, vitals: {}, metrics: undefined, errors: 0, warnings: 0 })
     attachView(ref, webview)
@@ -82,6 +87,7 @@ export function WebView(props: Props): ReactNode {
     })
     on('did-navigate', (e: Electron.DidNavigateEvent) => {
       if (e.url === 'about:blank') return
+      retried = ''
       rt().patchView(viewId, { url: e.url, error: undefined, errors: 0, warnings: 0, vitals: {}, metrics: undefined })
       onNavigated(ref, e.url, false)
     })
@@ -100,6 +106,14 @@ export function WebView(props: Props): ReactNode {
     on('did-fail-load', (e: Electron.DidFailLoadEvent) => {
       // -3 is ERR_ABORTED: a navigation superseded by another, not a failure.
       if (!e.isMainFrame || e.errorCode === -3) return
+      // Several panes hitting one host at the same moment can get a connection
+      // dropped. Those failures are transient, so try once more before
+      // showing an error.
+      if (TRANSIENT.has(e.errorCode) && retried !== e.validatedURL) {
+        retried = e.validatedURL
+        window.setTimeout(() => !disposed && webview.loadURL(e.validatedURL).catch(() => {}), 700 + Math.random() * 600)
+        return
+      }
       rt().patchView(viewId, { loading: false, error: { code: e.errorCode, description: e.errorDescription, url: e.validatedURL } })
     })
     on('render-process-gone', () => rt().patchView(viewId, { loading: false, error: { code: 0, description: 'The page crashed', url: webview.getURL() } }))

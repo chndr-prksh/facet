@@ -1,6 +1,7 @@
 import {
   ArrowLeft,
   ArrowRight,
+  BookOpen,
   Camera,
   Code2,
   Copy,
@@ -17,9 +18,11 @@ import {
   ScrollText,
   Shield,
   Smartphone,
+  Speaker,
   Sun,
   Tablet,
   Trash2,
+  Tv,
   Watch,
   X
 } from 'lucide-react'
@@ -34,7 +37,7 @@ import { allDevices, deviceById, effectiveEmulation, paneSize, partitionFor, res
 import { IconButton, MenuItem, Popover, cx } from './ui'
 import { WebView } from './WebView'
 
-const KIND_ICON = { phone: Smartphone, foldable: Smartphone, tablet: Tablet, laptop: Laptop, desktop: Monitor, watch: Watch, responsive: Scaling }
+const KIND_ICON = { phone: Smartphone, foldable: BookOpen, tablet: Tablet, laptop: Laptop, desktop: Monitor, tv: Tv, watch: Watch, other: Speaker, responsive: Scaling }
 
 export const DeviceIcon = ({ kind, size = 13 }: { kind: Device['kind']; size?: number }): ReactNode => {
   const Icon = KIND_ICON[kind]

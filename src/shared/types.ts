@@ -1,4 +1,4 @@
-export type DeviceKind = 'phone' | 'foldable' | 'tablet' | 'laptop' | 'desktop' | 'watch' | 'responsive'
+export type DeviceKind = 'phone' | 'foldable' | 'tablet' | 'laptop' | 'desktop' | 'tv' | 'watch' | 'other' | 'responsive'
 export type DeviceOS = 'ios' | 'ipados' | 'android' | 'macos' | 'windows' | 'chromeos' | 'watchos' | 'other'
 export type Cutout = 'island' | 'notch' | 'punch' | 'none'
 
@@ -29,6 +29,10 @@ export interface Device {
   radius?: number
   /** Explicit UA string; when empty one is derived from `os`. */
   userAgent?: string
+  /** Release year, used to sort newest first. */
+  year?: number
+  /** The size is derived from the panel resolution, not measured on the device. */
+  approx?: boolean
   custom?: boolean
 }
 
