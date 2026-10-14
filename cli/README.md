@@ -3,8 +3,10 @@
 **Check a web page for responsive design problems on real phone, tablet and desktop viewports.** It runs from the command line, in CI, or as an [MCP](https://modelcontextprotocol.io) server that AI coding agents (Claude Code, Cursor, Codex, VS Code) can call.
 
 ```bash
-npx facet-check localhost:3000
+npx @chandra14/facet-check localhost:3000
 ```
+
+Or install it once with `npm install -g @chandra14/facet-check`, then run `facet-check localhost:3000`.
 
 Output for a test page with a price table that is too wide for phones (shortened):
 
@@ -49,7 +51,7 @@ On every device:
 ## Command line
 
 ```bash
-npx facet-check <url> [options]
+npx @chandra14/facet-check <url> [options]
 ```
 
 | Option | |
@@ -68,8 +70,8 @@ The URL can be a full URL, a bare host (`example.com`), a local dev server (`loc
 **Presets:** `popular` (the six most common real-world sizes), `default` (phone, tablet, laptop), `phones`, `latest`, `tablets`, `desktops`, `apple`, `foldables`, `extremes`.
 
 ```bash
-npx facet-check localhost:3000 -d phones --screenshots shots
-npx facet-check https://example.com -d iphone-17,"Galaxy S26",ipad,1440x900 --json
+npx @chandra14/facet-check localhost:3000 -d phones --screenshots shots
+npx @chandra14/facet-check https://example.com -d iphone-17,"Galaxy S26",ipad,1440x900 --json
 ```
 
 ### In CI
@@ -77,7 +79,7 @@ npx facet-check https://example.com -d iphone-17,"Galaxy S26",ipad,1440x900 --js
 The exit code is 1 when errors are found, so it can gate a pull request:
 
 ```yaml
-- run: npx facet-check http://localhost:4173 --fail-on error
+- run: npx @chandra14/facet-check http://localhost:4173 --fail-on error
 ```
 
 ## MCP server for AI agents
@@ -87,7 +89,7 @@ The exit code is 1 when errors are found, so it can gate a pull request:
 **Claude Code**
 
 ```bash
-claude mcp add facet -- npx -y facet-check mcp
+claude mcp add facet -- npx -y @chandra14/facet-check mcp
 ```
 
 **Cursor, VS Code, Claude Desktop and other clients**
@@ -95,7 +97,7 @@ claude mcp add facet -- npx -y facet-check mcp
 ```json
 {
   "mcpServers": {
-    "facet": { "command": "npx", "args": ["-y", "facet-check", "mcp"] }
+    "facet": { "command": "npx", "args": ["-y", "@chandra14/facet-check", "mcp"] }
   }
 }
 ```

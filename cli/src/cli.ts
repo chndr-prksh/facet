@@ -30,9 +30,9 @@ Options
   -v, --version            show the version
 
 Examples
-  npx facet-check example.com
-  npx facet-check localhost:3000 -d phones --screenshots shots
-  npx facet-check https://example.com -d iphone-17,ipad,1440x900 --json`
+  npx @chandra14/facet-check example.com
+  npx @chandra14/facet-check localhost:3000 -d phones --screenshots shots
+  npx @chandra14/facet-check https://example.com -d iphone-17,ipad,1440x900 --json`
 
 const RANK: Record<Issue['severity'] | 'never', number> = { info: 1, warn: 2, error: 3, never: 9 }
 const tty = process.stdout.isTTY && !process.env.NO_COLOR

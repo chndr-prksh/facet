@@ -8,7 +8,7 @@ It comes in three forms that share one catalogue of 292 device profiles:
 
 - **[Facet Web](https://chndr-prksh.github.io/facet/)**: a website. Paste a link, see it on many screens. Nothing to install.
 - **Facet desktop**: an Electron app with full device emulation, audits and an MCP server.
-- **[facet-check](cli)**: a command-line tool and MCP server, so CI and AI coding agents can check a page on many devices: `npx facet-check localhost:3000`.
+- **[facet-check](cli)**: a command-line tool and MCP server, so CI and AI coding agents can check a page on many devices: `npx @chandra14/facet-check localhost:3000`.
 
 ## Facet Web
 
@@ -39,15 +39,15 @@ Pushing to `main` deploys the site to GitHub Pages.
 **[facet-check](cli)** loads a page in headless Chromium on several emulated devices and reports the problems on each. It gives the element at fault and how to fix it.
 
 ```bash
-npx facet-check example.com                      # the six most common screen sizes
-npx facet-check localhost:3000 -d phones --screenshots shots
-npx facet-check https://example.com --json --fail-on error   # for CI
+npx @chandra14/facet-check example.com                      # the six most common screen sizes
+npx @chandra14/facet-check localhost:3000 -d phones --screenshots shots
+npx @chandra14/facet-check https://example.com --json --fail-on error   # for CI
 ```
 
 It also runs as an MCP server, so a coding agent can check its own CSS changes across screen sizes:
 
 ```bash
-claude mcp add facet -- npx -y facet-check mcp
+claude mcp add facet -- npx -y @chandra14/facet-check mcp
 ```
 
 Tools: `check_responsive`, `screenshot`, `compare_element`, `audit_accessibility`, `list_devices`. See [cli/README.md](cli/README.md) for every option.
@@ -177,13 +177,13 @@ Pages run in sandboxed `<webview>` guests with context isolation and no Node acc
 ## FAQ
 
 **How do I test my website on different screen sizes?**
-Open [Facet Web](https://chndr-prksh.github.io/facet/), paste the link, and pick devices or a preset such as *Most common sizes*. For a full check with real emulation, use the desktop app, or run `npx facet-check <url>` to get a list of problems per device.
+Open [Facet Web](https://chndr-prksh.github.io/facet/), paste the link, and pick devices or a preset such as *Most common sizes*. For a full check with real emulation, use the desktop app, or run `npx @chandra14/facet-check <url>` to get a list of problems per device.
 
 **How do I find what makes my page scroll sideways on mobile?**
-Run `npx facet-check <url> -d phones`. For each phone it reports how far the page overflows and names the outermost element that sticks out, with a CSS selector. The desktop app's Issues panel shows the same, live, while you edit.
+Run `npx @chandra14/facet-check <url> -d phones`. For each phone it reports how far the page overflows and names the outermost element that sticks out, with a CSS selector. The desktop app's Issues panel shows the same, live, while you edit.
 
 **Can an AI coding agent check responsive design?**
-Yes. Add the MCP server with `claude mcp add facet -- npx -y facet-check mcp`, or the same command in Cursor, VS Code or any MCP client. The agent can then load a page on many devices, read the problems, take screenshots and compare an element across breakpoints.
+Yes. Add the MCP server with `claude mcp add facet -- npx -y @chandra14/facet-check mcp`, or the same command in Cursor, VS Code or any MCP client. The agent can then load a page on many devices, read the problems, take screenshots and compare an element across breakpoints.
 
 **How is this different from Chrome DevTools device mode?**
 DevTools shows one viewport at a time. Facet shows many side by side, keeps them in step as you scroll and click, and audits all of them at once.

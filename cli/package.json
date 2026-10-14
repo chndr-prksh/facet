@@ -1,5 +1,5 @@
 {
-  "name": "facet-check",
+  "name": "@chandra14/facet-check",
   "version": "0.1.0",
   "description": "Check any web page for responsive design problems on real phone, tablet and desktop viewports, from the command line or as an MCP server for AI coding agents.",
   "keywords": [
@@ -34,6 +34,9 @@
   "type": "module",
   "bin": {
     "facet-check": "dist/facet-check.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
     "dist",
