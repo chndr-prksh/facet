@@ -4,16 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Facet: test any website on every screen size</title>
-    <meta name="description" content="Paste a link and see it on phones, tablets, laptops and desktops side by side. Nearly 300 device sizes, free, nothing to install." />
+    <meta name="description" content="Free responsive design tester. Paste a link and see it on phones, tablets, laptops and desktops side by side. Nearly 300 device sizes, nothing to install." />
+    <link rel="canonical" href="https://chndr-prksh.github.io/facet/" />
     <meta property="og:title" content="Facet: test any website on every screen size" />
     <meta property="og:description" content="Paste a link and see it on phones, tablets, laptops and desktops side by side." />
     <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:url" content="https://chndr-prksh.github.io/facet/" />
+    <meta property="og:site_name" content="Facet" />
+    <meta property="og:image" content="https://chndr-prksh.github.io/facet/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#0d0e10" />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Facet",
+        "alternateName": "Facet responsive design tester",
+        "url": "https://chndr-prksh.github.io/facet/",
+        "description": "A free, open-source responsive design tester. Shows a web page on many phone, tablet, laptop and desktop screen sizes side by side, with 292 device profiles.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (web browser)",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "license": "https://opensource.org/licenses/MIT",
+        "codeRepository": "https://github.com/chndr-prksh/facet",
+        "sameAs": ["https://github.com/chndr-prksh/facet", "https://www.npmjs.com/package/facet-check"],
+        "featureList": [
+          "Preview a website on many device sizes at once",
+          "292 phone, tablet, laptop and desktop profiles",
+          "Works with localhost",
+          "Shareable links that reopen the same page on the same devices",
+          "A/B compare two URLs on every device",
+          "Command-line checker and MCP server for AI agents: npx facet-check"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <h1>Facet: test any website on every screen size</h1>
+      <p>Facet is a free, open-source responsive design tester. Paste a link and see the page on phones, tablets, laptops and desktops side by side. It needs JavaScript to run.</p>
+      <p>Source code, the desktop app and the facet-check command-line tool: <a href="https://github.com/chndr-prksh/facet">github.com/chndr-prksh/facet</a>.</p>
+    </noscript>
     <script type="module" src="./src/main.tsx"></script>
   </body>
 </html>
