@@ -1,0 +1,55 @@
+{
+  "name": "facet-check",
+  "version": "0.1.0",
+  "description": "Check any web page for responsive design problems on real phone, tablet and desktop viewports, from the command line or as an MCP server for AI coding agents.",
+  "keywords": [
+    "responsive",
+    "responsive-design",
+    "responsive-testing",
+    "mobile-friendly",
+    "viewport",
+    "device-emulation",
+    "screenshot",
+    "horizontal-scroll",
+    "tap-targets",
+    "accessibility",
+    "axe-core",
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "playwright",
+    "cli",
+    "ci"
+  ],
+  "homepage": "https://github.com/chndr-prksh/facet/tree/main/cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chndr-prksh/facet.git",
+    "directory": "cli"
+  },
+  "bugs": "https://github.com/chndr-prksh/facet/issues",
+  "author": "Chandra Prakash",
+  "license": "MIT",
+  "mcpName": "io.github.chndr-prksh/facet",
+  "type": "module",
+  "bin": {
+    "facet-check": "dist/facet-check.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "prepublishOnly": "node build.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "axe-core": "^4.14.0",
+    "playwright-core": "^1.64.0",
+    "zod": "^4.6.6"
+  }
+}

@@ -5,3 +5,4 @@ dist
 e2e/artifacts
 *.tsbuildinfo
 web/dist
+cli/dist

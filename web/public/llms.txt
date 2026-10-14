@@ -1,0 +1,27 @@
+# Facet
+
+> Facet is a free, open-source (MIT) tool for testing responsive web design. It shows a web page on many phone, tablet, laptop and desktop screen sizes at once, and finds layout problems on each one: horizontal scrolling and the element causing it, tap targets under 24px, text under 12px, form fields that make iOS zoom, viewport meta mistakes, clipped text, oversized images and fixed headers covering the screen.
+
+Facet has three parts that share one catalogue of 292 device profiles (iPhone SE to 2026 flagships, foldables, tablets, laptops, desktop monitors):
+
+- Facet Web, this site: paste a link and see it on many devices side by side. Works with localhost. Shareable links take `?url=<page>&devices=<id>,<id>`, for example `https://chndr-prksh.github.io/facet/?url=https://example.com&devices=iphone-17,ipad,laptop-1536`.
+- Facet desktop: an Electron app with real device emulation (pixel ratio, touch, user agent), mirrored scrolling and clicks, audits, screenshots and a built-in MCP server.
+- facet-check: a command-line tool and stdio MCP server for CI and AI coding agents.
+
+## Checking a page from the command line or an agent
+
+- `npx facet-check <url>` checks the six most common screen sizes and prints the problems per device. It exits 1 when errors are found.
+- `npx facet-check <url> -d phones --screenshots shots` saves a PNG per device.
+- `npx facet-check <url> --json` prints a machine-readable report.
+- `claude mcp add facet -- npx -y facet-check mcp` adds the MCP server to Claude Code. Other clients use the command `npx -y facet-check mcp`. Tools: check_responsive, screenshot, compare_element, audit_accessibility, list_devices.
+
+## Docs
+
+- [README](https://github.com/chndr-prksh/facet#readme): features, desktop app, MCP tools, FAQ
+- [facet-check README](https://github.com/chndr-prksh/facet/tree/main/cli#readme): every CLI option and the MCP setup for each client
+- [Device catalogue](https://github.com/chndr-prksh/facet/blob/main/src/shared/devices.ts): viewport sizes and pixel ratios, with sources
+
+## Limits
+
+- Every device renders with Chromium, so Safari-only (WebKit) bugs need Safari.
+- Facet Web shows pages in frames. Most large sites forbid that; the Facet Helper extension or the desktop app removes the limit.

@@ -1,13 +1,14 @@
 # Facet
 
-A desktop browser for responsive web development. It shows one page on many devices at once, mirrors what you do in one to all the others, and checks every viewport for problems while you work.
+**Facet is a free, open-source tool for testing responsive web design.** It shows a web page on many phones, tablets, laptops and desktop monitors at once. It mirrors what you do in one device to all the others, and it checks every screen size for layout problems while you work: sideways scrolling, tiny tap targets, unreadable text and more.
 
-Facet was built as an answer to [Responsively App](https://github.com/responsively-org/responsively-app): the same core idea, with real device emulation and built-in audits added. It is an independent implementation and shares no code with Responsively.
+Facet is an independent, open-source alternative to [Responsively App](https://github.com/responsively-org/responsively-app). It has the same core idea, plus real device emulation and built-in audits. It shares no code with Responsively.
 
-It comes in two forms that share one device catalogue:
+It comes in three forms that share one catalogue of 292 device profiles:
 
 - **[Facet Web](https://chndr-prksh.github.io/facet/)**: a website. Paste a link, see it on many screens. Nothing to install.
 - **Facet desktop**: an Electron app with full device emulation, audits and an MCP server.
+- **[facet-check](cli)**: a command-line tool and MCP server, so CI and AI coding agents can check a page on many devices: `npx facet-check localhost:3000`.
 
 ## Facet Web
 
@@ -32,6 +33,24 @@ npm run test:web       # 21 checks, with and without the extension
 ```
 
 Pushing to `main` deploys the site to GitHub Pages.
+
+## Command line, CI and AI agents
+
+**[facet-check](cli)** loads a page in headless Chromium on several emulated devices and reports the problems on each. It gives the element at fault and how to fix it.
+
+```bash
+npx facet-check example.com                      # the six most common screen sizes
+npx facet-check localhost:3000 -d phones --screenshots shots
+npx facet-check https://example.com --json --fail-on error   # for CI
+```
+
+It also runs as an MCP server, so a coding agent can check its own CSS changes across screen sizes:
+
+```bash
+claude mcp add facet -- npx -y facet-check mcp
+```
+
+Tools: `check_responsive`, `screenshot`, `compare_element`, `audit_accessibility`, `list_devices`. See [cli/README.md](cli/README.md) for every option.
 
 ## Run the desktop app
 
@@ -145,11 +164,32 @@ src/
     panels/          the nine side panels
 web/           Facet Web, the static site (shares src/shared and the UI kit)
 extension/     Facet Helper, the browser extension for Facet Web
-e2e/           smoke tests for the app and the website, visual tour, fixture site
+cli/           facet-check, the command-line tool and stdio MCP server (shares the device catalogue and audits)
+e2e/           tests for the app, the website and the CLI, visual tour, fixture site
 ```
 
 Pages run in sandboxed `<webview>` guests with context isolation and no Node access. The app UI has a strict content security policy and talks to the main process only through allow-listed channels.
 
 ## Testing
 
-`npm test` builds the desktop app, launches it, and loads a fixture site with deliberate defects. It checks emulated viewports, mirroring (including a real pointer click through a zoomed pane), every audit, overlays, rotation, the MCP server, and reads pixels back from screenshots of a colour-block page to confirm captures are correct on every device. `npm run tour` walks every screen and saves screenshots to `e2e/artifacts/` for review. `npm run test:packaged` runs the same checks against the packaged app.
+`npm test` builds the desktop app, launches it, and loads a fixture site with deliberate defects. It checks emulated viewports, mirroring (including a real pointer click through a zoomed pane), every audit, overlays, rotation, the MCP server, and reads pixels back from screenshots of a colour-block page to confirm captures are correct on every device. `npm run tour` walks every screen and saves screenshots to `e2e/artifacts/` for review. `npm run test:packaged` runs the same checks against the packaged app. `npm run test:cli` runs facet-check and its MCP server against the same fixture site (30 checks).
+
+## FAQ
+
+**How do I test my website on different screen sizes?**
+Open [Facet Web](https://chndr-prksh.github.io/facet/), paste the link, and pick devices or a preset such as *Most common sizes*. For a full check with real emulation, use the desktop app, or run `npx facet-check <url>` to get a list of problems per device.
+
+**How do I find what makes my page scroll sideways on mobile?**
+Run `npx facet-check <url> -d phones`. For each phone it reports how far the page overflows and names the outermost element that sticks out, with a CSS selector. The desktop app's Issues panel shows the same, live, while you edit.
+
+**Can an AI coding agent check responsive design?**
+Yes. Add the MCP server with `claude mcp add facet -- npx -y facet-check mcp`, or the same command in Cursor, VS Code or any MCP client. The agent can then load a page on many devices, read the problems, take screenshots and compare an element across breakpoints.
+
+**How is this different from Chrome DevTools device mode?**
+DevTools shows one viewport at a time. Facet shows many side by side, keeps them in step as you scroll and click, and audits all of them at once.
+
+**Does it test Safari?**
+No. Every device renders with Chromium. An iPhone profile has the iPhone's screen size, pixel ratio, touch and user agent, but not Safari's WebKit engine.
+
+**Is Facet a fork of Responsively App?**
+No. It was written from scratch and shares no code with Responsively. Facet is MIT-licensed.
