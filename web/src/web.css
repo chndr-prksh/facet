@@ -412,3 +412,28 @@ a.icon-btn {
   width: 14px;
   height: 14px;
 }
+
+/* Touch screens: 24px minimum tap targets (WCAG 2.5.8), 16px fields so iOS
+   does not zoom on focus, and no text under 12px. Mouse layouts are unchanged. */
+@media (pointer: coarse) {
+  .web .icon-btn.sm,
+  .web .segmented button,
+  .web .zoom button {
+    min-width: 32px;
+    min-height: 32px;
+  }
+  .web .segmented,
+  .web .zoom {
+    height: auto;
+  }
+  .web .address input,
+  .web-start .start-form input {
+    font-size: 16px;
+  }
+  .web .tool-btn .count,
+  .web .zoom .zoom-value,
+  .web-start .start-links .chip,
+  .web-start .start-notes code {
+    font-size: 12px;
+  }
+}
