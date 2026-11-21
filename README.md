@@ -10,6 +10,32 @@ It comes in three forms that share one catalogue of 292 device profiles:
 - **Facet desktop**: an Electron app with full device emulation, audits and an MCP server.
 - **[facet-check](cli)**: a command-line tool and MCP server, so CI and AI coding agents can check a page on many devices: `npx @chandra14/facet-check localhost:3000`.
 
+## Contents
+
+- [Which one should I use?](#which-one-should-i-use)
+- [Facet Web](#facet-web)
+- [Command line, CI and AI agents](#command-line-ci-and-ai-agents)
+- [Run the desktop app](#run-the-desktop-app)
+- [Desktop app features](#desktop-app-features)
+- [The device catalogue](#the-device-catalogue)
+- [Keyboard shortcuts](#keyboard-shortcuts)
+- [Limits worth knowing](#limits-worth-knowing)
+- [How it is put together](#how-it-is-put-together)
+- [Testing](#testing)
+- [FAQ](#faq)
+- [License](#license)
+
+## Which one should I use?
+
+| | Facet Web | Facet desktop | facet-check |
+|---|---|---|---|
+| **Best for** | A quick look at a page on many screens | Building and debugging a responsive layout | CI pipelines and AI coding agents |
+| **Install** | Nothing; open the website | Build from source (Node 20.19+ or 22.12+) | `npx @chandra14/facet-check` |
+| **Emulation** | Exact viewport size only | Pixel ratio, touch, user agent, mobile viewport | Pixel ratio, touch, user agent, mobile viewport |
+| **Audits** | Sideways-overflow flag (with Facet Helper) | Issues, accessibility, SEO, outline, breakpoints, console | Responsive issues and accessibility, reported per device |
+| **Mirroring** | With Facet Helper | Built in | Not applicable |
+| **MCP server** | No | Yes, local HTTP | Yes, stdio |
+
 ## Facet Web
 
 **https://chndr-prksh.github.io/facet/**
@@ -54,6 +80,8 @@ Tools: `check_responsive`, `screenshot`, `compare_element`, `audit_accessibility
 
 ## Run the desktop app
 
+There are no prebuilt downloads yet, so the desktop app runs from source:
+
 ```bash
 npm install
 npm run dev        # development, with hot reload
@@ -63,7 +91,7 @@ npm test           # 55 end-to-end checks against the built app
 
 Requires Node 20.19+ or 22.12+. `npm run dist` produces installers (dmg, nsis, AppImage); they are unsigned until you add signing credentials.
 
-## What it does
+## Desktop app features
 
 **Devices**
 
@@ -116,7 +144,7 @@ Sixteen tools: `get_state`, `navigate`, `list_devices`, `set_devices`, `screensh
 
 Apple publishes logical resolutions, so those entries are exact. Android makers do not, and the value shifts with the user's display-size setting; entries derived from the panel resolution are marked `≈`. Sources: Apple's specifications, the Chrome DevTools device list, [yesviz.com](https://yesviz.com/viewport/), [screensize.io](https://www.screensize.io/devices.html) and [webmobilefirst.com](https://www.webmobilefirst.com/en/devices/). The catalogue lives in [`src/shared/devices.ts`](src/shared/devices.ts).
 
-## Shortcuts
+## Keyboard shortcuts
 
 | | |
 |---|---|
@@ -193,3 +221,7 @@ No. Every device renders with Chromium. An iPhone profile has the iPhone's scree
 
 **Is Facet a fork of Responsively App?**
 No. It was written from scratch and shares no code with Responsively. Facet is MIT-licensed.
+
+## License
+
+MIT, as declared in [`package.json`](package.json) and [`cli/package.json`](cli/package.json). Facet shares no code with Responsively App.
